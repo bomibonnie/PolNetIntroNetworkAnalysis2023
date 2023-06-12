@@ -79,7 +79,7 @@ plot(net_igraph2,
      vertex.label.dist=1.2,
      vertex.label.color="black")
 
-net_igraph3 <- as.undirected(net_igraph, mode='collapse')
+net_igraph3 <- as.undirected(net_igraph, mode='collapse') # if we don't care about the number of ties between two
 net_igraph3
 
 windows()
@@ -94,16 +94,20 @@ plot(net_igraph3,
      vertex.label.color="black")
 
 ## Directed, Weighted 
-net_igraph
+net_igraph # Weight is already added
 E(net_igraph)$Weight
 
 ### Add vertex/edge attributes
+V(net_igraph)
 V(net_igraph)$gender <- c("M","F","F","M","M","M")
 V(net_igraph)$gender
 
 E(net_igraph)
 E(net_igraph)$color <- ifelse(E(net_igraph)$Weight==1, "darkred", "navy") 
-E(net_igraph)$color 
+E(net_igraph)$color
+
+net_igraph # what attributes were added?
+
 windows()
 plot(net_igraph,
      edge.width=1.5*E(net_igraph)$Weight,
@@ -130,8 +134,6 @@ E(net_igraph2)$color <- ifelse(E(net_igraph2)$Weight==1, "darkred", "navy")
 windows()
 plot(net_igraph2,
      edge.width=1.5*E(net_igraph)$Weight,
-     #edge.arrow.size=.6,
-     #edge.curved=0.2,
      edge.color=E(net_igraph2)$color,
      vertex.size=8, 
      vertex.frame.color="white", 
@@ -142,23 +144,26 @@ plot(net_igraph2,
 ## Two-mode networks
 ### Load the data
 edge2 <- read.csv("twomodeedge.csv", row.names = 1)
-
+class(edge2) #data frame
 ### Change to a matrix
-edge2mat <- as.matrix(edge)
+edge2mat <- as.matrix(edge2)
+class(edge2mat)
 
 ### to an igraph object
 net2 <- graph_from_incidence_matrix(edge2mat)
-net2.bp <- bipartite.projection(net2) ## make it two-mode
 
-### Make the "events" distict from actors
-V(net2)$type ## Events and actors are distinquished in type
+?bipartite.projection
+net2.bp <- bipartite.projection(net2) ## make it two-mode
+net2.bp
+### Make the "events" distinct from actors
+V(net2)$type ## Events and actors are distinguished in type
 
 V(net2)$shape <- c("square", "circle")[V(net2)$type+1]
 V(net2)$color <- c("gray", "white")[V(net2)$type+1]
-V(net2)$lcolor <- c("navy", "black")[V(net2)$type+1]
+V(net2)$lcolor <- c("navy", "darkred")[V(net2)$type+1]
 
 V(net2)$size <- c(1, 0.9)[V(net2)$type+1]
-V(net2)$vsize <- c(8, 5)[V(net2)$type+1]
+V(net2)$vsize <- c(10, 5)[V(net2)$type+1]
 
 ### Plot it
 windows()
@@ -166,7 +171,8 @@ plot(net2,
      vertex.label.color=V(net2)$lcolor, 
      vertex.label.cex=V(net2)$size,
      vertex.size=V(net2)$vsize,
-     vertex.frame.color="white") 
+     vertex.frame.color="black",
+     vertex.label.dist=1.5) 
 
 ## Real data: defense pacts (ATOP: Leeds et al. 2002)
 atop <- import("atop_sample2.csv")
