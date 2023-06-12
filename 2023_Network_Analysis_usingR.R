@@ -141,13 +141,13 @@ plot(net_igraph2,
 
 ## Two-mode networks
 ### Load the data
-edge <- read.csv("twomodeedge.csv", row.names = 1)
+edge2 <- read.csv("twomodeedge.csv", row.names = 1)
 
 ### Change to a matrix
-edge2 <- as.matrix(edge)
+edge2mat <- as.matrix(edge)
 
 ### to an igraph object
-net2 <- graph_from_incidence_matrix(edge2)
+net2 <- graph_from_incidence_matrix(edge2mat)
 net2.bp <- bipartite.projection(net2) ## make it two-mode
 
 ### Make the "events" distict from actors
