@@ -162,7 +162,8 @@ V(net2)$vsize <- c(8, 5)[V(net2)$type+1]
 
 ### Plot it
 windows()
-plot(net2, vertex.label.color=V(net2)$lcolor, 
+plot(net2, 
+     vertex.label.color=V(net2)$lcolor, 
      vertex.label.cex=V(net2)$size,
      vertex.size=V(net2)$vsize,
      vertex.frame.color="white") 
@@ -450,4 +451,3 @@ degree_signed(pnnet_1980, type = "net")
 pn_index(pnnet_1980) # range: -1 to 2
 
 ##### Q&A
-
